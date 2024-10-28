@@ -1,12 +1,12 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Stack, Text } from "@chakra-ui/layout";
-import { useToast } from "@chakra-ui/toast";
+import { Box, Stack, Text } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
 import { Button } from "@chakra-ui/react";
-import { ChatState } from "../Context/ChatProvider";
+import { ChatState } from "../context/ChatProvider";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 
 
@@ -71,6 +71,7 @@ const MyChats = ({ fetchAgain }) => {
          <GroupChatModal>
           <Button
             d="flex"
+            marginLeft="30px"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
           >
@@ -84,7 +85,8 @@ const MyChats = ({ fetchAgain }) => {
         p={3}
         bg="#F8F8F8"
         w="100%"
-        h="100%"
+        h="85%"
+        position="relative"
         borderRadius="lg"
         overflowY="hidden"
       >

@@ -62,3 +62,9 @@ const Homepage = () => {
 };
 
 export default Homepage;
+
+//container-keep the app responsive for the size of the screen...gets max width(maxW)-xl
+//text-title
+//we can define the syles just like that
+//mb=margin bottom
+//if login is clicked login component is rendered and for signup that component is rendered

@@ -1,8 +1,8 @@
-import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import { VStack } from "@chakra-ui/layout";
-import { useToast } from "@chakra-ui/toast";
+import { Button } from "@chakra-ui/react";
+import { FormControl, FormLabel } from "@chakra-ui/react";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";

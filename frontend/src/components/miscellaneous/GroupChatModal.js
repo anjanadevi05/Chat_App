@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../context/ChatProvider";
 import UserBadgeItem from "../User Avatar/UserBadgeItem";
 import UserListItem from "../User Avatar/UserListItem";
 
@@ -59,7 +59,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
+      //console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {

@@ -1,10 +1,11 @@
 const express= require("express");
 const dotenv= require("dotenv");
-const { chats } = require("./data/data");
+//const { chats } = require("./data/data");-to display dummy data to check in postman
 const connectDB = require("./config/db");
 const colors=require("colors");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 const app=express();//express js api
@@ -21,6 +22,7 @@ app.get("/",(req,res) => {
 //instead of 'get' we use 'use'
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
 /*
 //req and res are callback parameters
@@ -40,8 +42,51 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT=process.env.PORT || 5000;
-app.listen(PORT,console.log(`Server Started on PORT ${PORT}`.yellow.bold));
+const server=app.listen(PORT,console.log(`Server Started on PORT ${PORT}`.yellow.bold));
+const io=require('socket.io')(server,{
+    pingTimeout:90000,
+    cors: {
+        origin: "http://localhost:3000",
+    }
+});
 
+io.on("connection",(socket)=>{
+    console.log("connected to socket.io");
+    socket.on("setup", (userData) => {
+        socket.join(userData._id);
+        //console.log(userData._id);
+        socket.emit("connected");
+      });
+
+      socket.on("join chat", (room) => {
+        socket.join(room);
+        console.log("User Joined Room: " + room);
+      });
+
+      socket.on("typing", (room) => socket.in(room).emit("typing"));
+      socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+
+      socket.on("new message", (newMessageRecieved) => {
+        var chat = newMessageRecieved.chat;//to know from which chat the msg is
+    
+        if (!chat.users)
+             return console.log("chat.users not defined");
+    
+        chat.users.forEach((user) => {
+          if (user._id == newMessageRecieved.sender._id) 
+            return;
+    
+          socket.in(user._id).emit("message recieved", newMessageRecieved);
+        });
+    });
+
+})
+
+
+//io.on->to establish the connection
+//then after setup we use join to create a room for the user
+//on function to setup which takes the user function from the frontend
+//pingtimeout is the time it will stay active
 //to run this server we have a start script in the script of package.json file...
 //instead of the command node backend/server.j s
 //nodemon-we kill the server everytime and then run npm start...to avoid that we install this

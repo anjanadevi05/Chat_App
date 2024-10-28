@@ -10,9 +10,11 @@
   "author": "Anjana Devi",
   "license": "ISC",
   "dependencies": {
-    "@chakra-ui/react": "^2.8.2",
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^2.10.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@react-oauth/google": "^0.12.1",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
@@ -20,12 +22,17 @@
     "express": "^4.21.0",
     "express-async-handler": "^1.2.0",
     "framer-motion": "^11.9.0",
+    "google-auth-library": "^9.14.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.3",
     "nodemon": "^3.1.6",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "react-scrollable-feed": "^2.0.2",
+    "socket.io": "^4.8.1"
   }
 }

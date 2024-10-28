@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../context/ChatProvider";
 import UserBadgeItem from "../User Avatar/UserBadgeItem";
 import UserListItem from "../User Avatar/UserListItem";
 
@@ -140,8 +140,10 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         config
       );
 
-      setSelectedChat(data);
+      //setSelectedChat(data);
+      user1._id===user._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
+      fetchMessages();
       setLoading(false);
     } catch (error) {
       toast({

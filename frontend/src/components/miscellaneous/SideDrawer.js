@@ -1,37 +1,37 @@
-import { Button } from "@chakra-ui/button";
+import { Button } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { Input } from "@chakra-ui/input";
-import { Box, Text } from "@chakra-ui/layout";
+import { Input } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import {
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
-} from "@chakra-ui/menu";
+} from "@chakra-ui/react";
 import {
   Drawer,
   DrawerBody,
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-} from "@chakra-ui/modal";
+} from "@chakra-ui/react";
 
 
-import { Tooltip } from "@chakra-ui/tooltip";
+import { Tooltip } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { Avatar } from "@chakra-ui/avatar";
+import { Avatar } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "@chakra-ui/react";
 import ChatLoading from "../ChatLoading";
-import { Spinner } from "@chakra-ui/spinner";
+import { Spinner } from "@chakra-ui/react";
 import ProfileModal from "./ProfileModal";
 
 import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../User Avatar/UserListItem"; // Fix the import path
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../context/ChatProvider";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");

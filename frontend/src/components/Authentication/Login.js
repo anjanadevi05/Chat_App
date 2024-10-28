@@ -1,12 +1,13 @@
-import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import { VStack } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/react";
+import { FormControl, FormLabel } from "@chakra-ui/react";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-
+import "./login.css";
+import googleLogo from '../../google logo.jpeg'; 
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -17,6 +18,7 @@ const Login = () => {
   const toast = useToast();
   const history = useHistory();
   const handleClick = () => setShow(!show);
+
 
   const submitHandler = async () => {
     setLoading(true);
@@ -70,6 +72,7 @@ const Login = () => {
     }
   };
 
+  
   return (
     <VStack spacing="10px">
       <FormControl id="email" isRequired>
@@ -106,17 +109,12 @@ const Login = () => {
       >
         Login
       </Button>
-      <Button
-        variant="solid"
-        colorScheme="red"
-        width="100%"
-        onClick={() => {
-          setEmail("guest@example.com");
-          setPassword("123456");
-        }}
-      >
-        Get Guest User Credentials
-      </Button>
+      <Button className="login-with-google" width="100%">
+      <img 
+    src={googleLogo} 
+    alt="Google logo" 
+    style={{ width: "20px", height: "20px", marginRight: "10px" }} />
+  SIGN IN WITH GOOGLE</Button>
     </VStack>
   );
 };
