@@ -38,7 +38,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
 
-   const { selectedChat, setSelectedChat, user} =
+   const { selectedChat, setSelectedChat, user, notification, setNotification} =
     ChatState();
   
   const fetchMessages = async () => {
@@ -88,6 +88,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchMessages();
     selectedChatCompare=selectedChat;//to have the backup of the selected chat
   },[selectedChat])
+
+  //console.log(notification,"whofffffffffffff")
 //everytime a message is recieved 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
@@ -95,10 +97,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         !selectedChatCompare || // if none of the chat isselected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-        /*if (!notification.includes(newMessageRecieved)) {
+        if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
-        }*/
+        }
        //to give notification if message recieved
       } else {
         setMessages([...messages, newMessageRecieved]);
@@ -179,32 +181,38 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             px={2}
             w="100%"
             fontFamily="Work sans"
-            d="flex"
-            justifyContent={{ base: "space-between" }}
+            display="flex"
+            justifyContent="space-between"
             alignItems="center"
           >
-            <IconButton
-              d={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
-              onClick={() => setSelectedChat("")}
-            />
-            {!selectedChat.isGroupChat ? (
-              <>{getSender(user, selectedChat.users)}
-                  <ProfileModal
-                    user={getSenderFull(user, selectedChat.users)}
-                  /></>
-                    ) : (
-                    <>
-                  {selectedChat.chatName.toUpperCase()}
-                  <UpdateGroupChatModal
-                    fetchAgain={fetchAgain}
-                    setFetchAgain={setFetchAgain}
-                    fetchMessages={fetchMessages}
-                  />
-                </>
-              ) } 
-          </Text>
-              <Box
+            <Box>
+              <IconButton
+                d={{ base: "flex", md: "none" }}
+                icon={<ArrowBackIcon />}
+                onClick={() => setSelectedChat("")}
+              />
+            </Box>
+            <Box flex="1" textAlign="center">
+              {!selectedChat.isGroupChat ? (
+                <Text>{getSender(user, selectedChat.users)}</Text>
+                  ) : (
+                    <Text>{selectedChat.chatName.toUpperCase()}</Text>
+                      )}
+            </Box>
+            <Box>
+              {!selectedChat.isGroupChat ? (
+                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
+                  ) : (
+                    
+                    <UpdateGroupChatModal
+                      fetchAgain={fetchAgain}
+                      setFetchAgain={setFetchAgain}
+                      fetchMessages={fetchMessages}
+                    />
+                    )}
+            </Box>
+           </Text>
+           <Box
             d="flex"
             flexDir="column"
             justifyContent="space-between"
@@ -213,57 +221,50 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             w="100%"
             h="89%"
             borderRadius="lg"
-            overflowY="hidden"
             position="relative"
-          >
-            <Box flexGrow={1} overflowY="auto"></Box>
-             {loading ? (
-              <Spinner
-                size="xl"
-                w={20}
-                h={20}
-                alignSelf="center"
-                margin="auto"
-              />
-            ) : (
-              <div className="messages">
-                <ScrollableChat messages={messages} />
-              </div>
-            )}
-            <FormControl
-              onKeyDown={sendMessage}
-              id="first-name"
-              isRequired
-              mt={3}
-              position="absolute" // Fixed position at the bottom of the chat area
-              bottom={0}
-              left={0}
-              right={0}
-              p={2} // Add padding for aesthetics
-              bg="white" // Set background color for visibility
-            >
-              {istyping ? (
-                <div>
-                  <Lottie
-                    options={defaultOptions}
-                    height={30}
-                    width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-              <Input
-                variant="filled"
-                bg="#E0E0E0"
-                placeholder="Enter a message.."
-                value={newMessage}
-                onChange={typingHandler}
-              />
-            </FormControl>
+           >
+  <Box
+    flexGrow={1}
+    overflowY="auto" 
+    h="85%"
+  >
+    {loading ? (
+      <Spinner size="xl" w={20} h={20} alignSelf="center" margin="auto" />
+    ) : (
+      <ScrollableChat messages={messages} />
+    )}
+  </Box>
+  <FormControl
+    onKeyDown={sendMessage}
+    id="first-name"
+    isRequired
+    mt={3}
+    position="relative" 
+    bottom={0}
+    left={0}
+    right={0}
+    p={2} 
+  >
+    {istyping ? (
+      <div>
+        <Lottie
+          options={defaultOptions}
+          height={30}
+          width={70}
+          style={{ marginBottom: 15, marginLeft: 0 }}
+        />
+      </div>
+    ) : null}
+    <Input
+      variant="filled"
+      bg="#E0E0E0"
+      placeholder="Enter a message.."
+      value={newMessage}
+      onChange={typingHandler}
+    />
+  </FormControl>
+</Box>
 
-          </Box>
         </>
      ) : (
    <Box d="flex" alignItems="center" justifyContent="center" h="100%">

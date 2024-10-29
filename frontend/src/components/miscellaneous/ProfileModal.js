@@ -1,4 +1,5 @@
 import { ViewIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -16,6 +17,11 @@ import {
 
 const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  useEffect(() => {
+    if (isOpen) {
+      console.log(user.pic); // Log the picture URL when the modal is opened
+    }
+  }, [isOpen, user.pic]);
 
   return (
     <>
@@ -48,10 +54,12 @@ const ProfileModal = ({ user, children }) => {
               src={user.pic}
               alt={user.name}
             />
+            
             <Text
               fontSize={{ base: "28px", md: "30px" }}
               fontFamily="Work sans"
             >
+              Name: {user.name}<br />
               Email: {user.email}
             </Text>
           </ModalBody>

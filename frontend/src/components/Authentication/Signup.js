@@ -84,6 +84,7 @@ const Signup = () => {
     }
   };
 
+
 //image only file input-particularly images..on click to handle a image -even if user enters multiple
 // images it will take the 1st image as input and given as param to this post details
 const postDetails = (pics) => {
@@ -223,3 +224,4 @@ export default Signup;
 //we have to enable unsigned uploading->then add upload preset
 //toast from chakra ui
 //cloudinary-chatsy shld be unsigned
+
