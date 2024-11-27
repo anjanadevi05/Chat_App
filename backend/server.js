@@ -1,5 +1,6 @@
 const express= require("express");
 const dotenv= require("dotenv");
+const path=require('path');
 //const { chats } = require("./data/data");-to display dummy data to check in postman
 const connectDB = require("./config/db");
 const colors=require("colors");
@@ -15,15 +16,32 @@ connectDB();
 
 app.use(express.json()); // to accept json data-from the frontend
 
-app.get("/",(req,res) => {
+/*app.get("/",(req,res) => {
     res.send('API is Running');//sent response
-});
+});*/
 
 //instead of 'get' we use 'use'
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
+const _dirname=path.resolve();
+//to deploy we will use a variable of .env set it to deployment mode
+//that variable can be production or under development
+if(process.env.NODE_ENV=='production')
+{
+    app.use(express.static(path.join(__dirname, "/frontend/build")));
+  //build->to build frontend npm run build->to start the production of the app->will fill the needed files for production in bild folder
+   app.get("*", (req, res) =>
+      res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+    );
+    //api call-> * for everything
+}
+else{
+  app.get("/",(req,res) => {
+    res.send('API is Running');//sent response
+});
+}
 /*
 //req and res are callback parameters
 app.get("/api/chat",(req,res)=>{
